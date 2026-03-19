@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import ResolvedGallery from '../components/ResolvedGallery';
-import heroImg from '../assets/hero_village.png';
-import featuresImg from '../assets/features_smart.png';
-import impactImg from '../assets/impact_community.png';
+import heroImg from '../assets/hero_corporate.png';
+import featuresImg from '../assets/features_minimal.png';
+import impactImg from '../assets/impact_real.png';
 
 const Home = () => {
     return (
         <div className="home-page-modern">
             {/* Hero Section */}
-            <section className="hero-modern" style={{ backgroundImage: `linear-gradient(rgba(10, 25, 47, 0.6), rgba(10, 25, 47, 0.8)), url(${heroImg})` }}>
+            <section className="hero-modern" style={{ backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), url(${heroImg})` }}>
                 <div className="hero-content-modern">
                     <h1 className="hero-title">Welcome to the Future of <br /><span>Village Development</span></h1>
                     <p className="hero-subtitle">A transparent, digital ecosystem empowering citizens to shape their community. Report, track, and witness change in real-time.</p>
@@ -56,10 +56,10 @@ const Home = () => {
 
             {/* Impact Section */}
             <section className="impact-modern" id="impact">
-                <div className="impact-header" style={{ backgroundImage: `linear-gradient(rgba(244, 244, 244, 0.85), rgba(244, 244, 244, 0.95)), url(${impactImg})` }}>
+                <div className="impact-header" style={{ backgroundImage: `url(${impactImg})` }}>
                     <div className="impact-header-content">
                         <h2 className="section-title">Community <br/><span>Impact</span></h2>
-                        <p style={{fontSize: '1.2rem', color: '#555'}}>Real change begins with visibility. Explore the issues our administration has successfully resolved below.</p>
+                        <p>Real change begins with visibility. Explore the issues our administration has successfully resolved below.</p>
                     </div>
                 </div>
                 <div className="impact-gallery-wrapper">
