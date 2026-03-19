@@ -21,25 +21,30 @@ const Home = () => {
 
             {/* Features Section */}
             <section className="features-modern" id="features">
-                <div className="features-header" style={{ textAlign: 'center', marginBottom: '50px' }}>
+                <div className="features-header" style={{ textAlign: 'center', marginBottom: '60px' }}>
                     <h2 className="section-title">Smart Infrastructure, <br/><span>Smarter Governance</span></h2>
-                    <p className="hero-subtitle" style={{ color: '#64748B', maxWidth: '600px', margin: '0 auto' }}>A complete digital toolkit bridging the gap between citizens and administration.</p>
+                    <p className="hero-subtitle" style={{ color: '#64748B', maxWidth: '600px', margin: '0 auto' }}>A completely integrated digital toolkit bringing the village community together.</p>
                 </div>
-                <div className="features-grid-modern">
-                    <div className="feature-card-modern">
-                        <span className="feature-card-icon">📍</span>
-                        <h3>Geolocation Reporting</h3>
-                        <p>Pinpoint issues precisely on the map for faster response times and accurate tracking.</p>
+                <div className="features-symmetrical-grid">
+                    <div className="feature-symm-card">
+                        <div className="icon-ring">📍</div>
+                        <h3>Precision Mapping</h3>
+                        <p>Pinpoint issues precisely on our interactive map for lightning-fast response times.</p>
                     </div>
-                    <div className="feature-card-modern">
-                        <span className="feature-card-icon">📈</span>
+                    <div className="feature-symm-card">
+                        <div className="icon-ring">📸</div>
+                        <h3>Verified Proof</h3>
+                        <p>Officers are required to upload photo evidence ensuring 100% transparency.</p>
+                    </div>
+                    <div className="feature-symm-card">
+                        <div className="icon-ring">📈</div>
                         <h3>Live Tracking</h3>
-                        <p>Monitor your grievance status from submission to resolution in real-time.</p>
+                        <p>Monitor your grievance status step-by-step from submission to resolution in real-time.</p>
                     </div>
-                    <div className="feature-card-modern">
-                        <span className="feature-card-icon">📸</span>
-                        <h3>Verified Proof of Work</h3>
-                        <p>Officers upload photo evidence confirming task completion for full transparency.</p>
+                    <div className="feature-symm-card">
+                        <div className="icon-ring">💬</div>
+                        <h3>Direct Feedback</h3>
+                        <p>Hold the administration accountable by rating the quality of resolutions directly.</p>
                     </div>
                 </div>
             </section>
