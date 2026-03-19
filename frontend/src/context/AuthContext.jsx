@@ -29,7 +29,12 @@ export const AuthProvider = ({ children }) => {
         return data;
     };
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await api.post('/auth/logout');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
         localStorage.removeItem('user');
         setUser(null);
     };

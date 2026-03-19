@@ -2,9 +2,16 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (res, id) => {
+    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
+    });
+
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== 'development',
+        sameSite: 'strict',
+        maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 };
 
@@ -26,13 +33,13 @@ const registerUser = async (req, res) => {
         });
 
         if (user) {
+            generateToken(res, user._id);
             res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
                 role: user.role,
-                token: generateToken(user._id),
             });
         } else {
             res.status(400).json({ message: 'Invalid user data' });
@@ -49,13 +56,13 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && (await user.matchPassword(password))) {
+            generateToken(res, user._id);
             res.json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
                 role: user.role,
-                token: generateToken(user._id),
             });
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
@@ -80,13 +87,13 @@ const updateUserProfile = async (req, res) => {
 
             const updatedUser = await user.save();
 
+            generateToken(res, updatedUser._id);
             res.json({
                 _id: updatedUser._id,
                 name: updatedUser.name,
                 email: updatedUser.email,
                 phone: updatedUser.phone,
                 role: updatedUser.role,
-                token: generateToken(updatedUser._id),
             });
         } else {
             res.status(404).json({ message: 'User not found' });
@@ -96,4 +103,12 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, updateUserProfile };
+const logoutUser = (req, res) => {
+    res.cookie('token', '', {
+        httpOnly: true,
+        expires: new Date(0),
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
+};
+
+module.exports = { registerUser, loginUser, logoutUser, updateUserProfile };

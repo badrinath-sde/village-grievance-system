@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 dotenv.config();
@@ -10,7 +11,11 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://village-grievance-system-frontend.onrender.com'], // Add your deployed URL if needed
+    credentials: true,
+}));
 
 // Static folder for uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

@@ -2,13 +2,11 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: 'https://village-grievance-system.onrender.com/api',
+    withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
-        config.headers.Authorization = `Bearer ${user.token}`;
-    }
+    // The token is handled by HTTP-only cookie, so we don't attach it manually.
     return config;
 });
 
