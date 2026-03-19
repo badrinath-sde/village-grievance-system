@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://village-grievance-system-frontend.onrender.com'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://village-grievance-system-frontend.onrender.com','https://village-grievance-system.netlify.app'],
     credentials: true,
 }));
 
