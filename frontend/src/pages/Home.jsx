@@ -21,35 +21,25 @@ const Home = () => {
 
             {/* Features Section */}
             <section className="features-modern" id="features">
-                <div className="features-container">
-                    <div className="features-image-wrapper">
-                        <img src={featuresImg} alt="Smart Village Features" className="features-img" />
+                <div className="features-header" style={{ textAlign: 'center', marginBottom: '50px' }}>
+                    <h2 className="section-title">Smart Infrastructure, <br/><span>Smarter Governance</span></h2>
+                    <p className="hero-subtitle" style={{ color: '#64748B', maxWidth: '600px', margin: '0 auto' }}>A complete digital toolkit bridging the gap between citizens and administration.</p>
+                </div>
+                <div className="features-grid-modern">
+                    <div className="feature-card-modern">
+                        <span className="feature-card-icon">📍</span>
+                        <h3>Geolocation Reporting</h3>
+                        <p>Pinpoint issues precisely on the map for faster response times and accurate tracking.</p>
                     </div>
-                    <div className="features-text">
-                        <h2 className="section-title">Smart Infrastructure, <br/><span>Smarter Governance</span></h2>
-                        <div className="features-list">
-                            <div className="feature-item">
-                                <span className="feature-icon">📍</span>
-                                <div>
-                                    <h3>Geolocation Reporting</h3>
-                                    <p>Pinpoint issues precisely for faster response times.</p>
-                                </div>
-                            </div>
-                            <div className="feature-item">
-                                <span className="feature-icon">📈</span>
-                                <div>
-                                    <h3>Live Tracking</h3>
-                                    <p>Monitor your grievance status from submission to resolution.</p>
-                                </div>
-                            </div>
-                            <div className="feature-item">
-                                <span className="feature-icon">📸</span>
-                                <div>
-                                    <h3>Verified Proof of Work</h3>
-                                    <p>Officers upload photo evidence confirming task completion.</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="feature-card-modern">
+                        <span className="feature-card-icon">📈</span>
+                        <h3>Live Tracking</h3>
+                        <p>Monitor your grievance status from submission to resolution in real-time.</p>
+                    </div>
+                    <div className="feature-card-modern">
+                        <span className="feature-card-icon">📸</span>
+                        <h3>Verified Proof of Work</h3>
+                        <p>Officers upload photo evidence confirming task completion for full transparency.</p>
                     </div>
                 </div>
             </section>
