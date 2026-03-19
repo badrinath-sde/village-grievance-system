@@ -18,12 +18,13 @@ const ResolvedGallery = () => {
 
     if (complaints.length === 0) {
         return (
-            <div className="impact-empty-state">
-                <div className="empty-icon-wrapper">
-                    <span className="empty-icon">✨</span>
+            <div className="premium-empty-state">
+                <div className="premium-empty-content">
+                    <span className="premium-icon">🏆</span>
+                    <h3>A Perfect Start</h3>
+                    <p>No community issues have been reported or resolved yet! Our village is currently running smoothly.</p>
+                    <button onClick={() => window.location.href='/login'} className="btn-modern btn-glow" style={{ marginTop: '25px', display: 'inline-block' }}>Report an Issue</button>
                 </div>
-                <h3>The Canvas is Clear</h3>
-                <p>We're just getting started! As community issues are reported and completely resolved by our dedicated team, the impactful results will vividly appear right here.</p>
             </div>
         );
     }
