@@ -16,7 +16,12 @@ import { Toaster } from 'react-hot-toast';
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return (
+    <div className="loading-screen">
+      <div className="spinner"></div>
+      <p style={{ color: 'hsl(var(--foreground) / 0.5)', fontSize: '0.875rem' }}>Loading...</p>
+    </div>
+  );
   if (!user) return <Navigate to="/login" />;
   if (allowedRoles && !allowedRoles.includes(user.role)) return <Navigate to="/" />;
 
@@ -30,7 +35,23 @@ const Layout = () => {
 
   return (
     <div className="App">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            borderRadius: '0.75rem',
+            background: '#1e293b',
+            color: '#f1f5f9',
+            fontSize: '0.875rem',
+            fontWeight: '500',
+            padding: '12px 16px',
+          },
+          success: { iconTheme: { primary: '#22c55e', secondary: '#fff' } },
+          error: { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
+        }}
+      />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

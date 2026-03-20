@@ -3,6 +3,7 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import AdminComplaintList from '../components/AdminComplaintList';
 import Sidebar from '../components/Sidebar';
+import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
     const { user } = useAuth();
@@ -29,12 +30,13 @@ const AdminDashboard = () => {
     const handleAssignComplaint = async (complaintId, officerId) => {
         try {
             await api.put('/admin/assign-complaint', { complaintId, officerId });
-            alert('Complaint assigned successfully');
-            fetchData(); // Refresh data
+            toast.success('Complaint assigned successfully');
+            fetchData();
         } catch (error) {
-            alert('Error assigning complaint');
+            toast.error('Error assigning complaint');
         }
     };
+
 
     const counts = {
         total: complaints.length,

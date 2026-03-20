@@ -13,7 +13,6 @@ const AdminCitizens = () => {
     const fetchCitizens = async () => {
         try {
             const { data } = await api.get('/admin/users');
-            // Filter for users (citizens)
             const users = data.filter(user => user.role === 'user');
             setCitizens(users);
         } catch (error) {
@@ -28,23 +27,42 @@ const AdminCitizens = () => {
             <Sidebar role="admin" activeTab="citizens" />
             <div className="dashboard-main">
                 <header className="dashboard-header">
-                    <h2>Manage Citizens</h2>
+                    <h1>Manage Citizens</h1>
                 </header>
                 <div className="dashboard-content">
-                    <div className="user-list">
+                    <h3 style={{ fontSize: '1.15rem', fontWeight: '700', marginBottom: '1.25rem' }}>
+                        Registered Citizens ({citizens.length})
+                    </h3>
+                    {loading ? (
+                        <div className="loading-screen" style={{ minHeight: '200px' }}>
+                            <div className="spinner"></div>
+                            <p style={{ color: 'hsl(var(--foreground) / 0.5)', fontSize: '0.875rem' }}>Loading citizens...</p>
+                        </div>
+                    ) : citizens.length === 0 ? (
+                        <div className="premium-empty-state">
+                            <div className="premium-empty-content">
+                                <span className="premium-icon">👥</span>
+                                <h3>No Citizens Registered</h3>
+                                <p>Citizens will appear here once they register.</p>
+                            </div>
+                        </div>
+                    ) : (
                         <div className="card-container">
-                            {loading ? <p>Loading...</p> : citizens.length === 0 ? <p>No citizens found.</p> : (
-                                citizens.map(u => (
-                                    <div key={u._id} className="user-card">
-                                        <p><strong>Name:</strong> {u.name}</p>
+                            {citizens.map(u => (
+                                <div key={u._id} className="user-card">
+                                    <div className="card-header">
+                                        <h3>{u.name}</h3>
+                                        <span className="badge badge-resolved">{u.role}</span>
+                                    </div>
+                                    <div className="card-body">
                                         <p><strong>Email:</strong> {u.email}</p>
                                         <p><strong>Phone:</strong> {u.phone}</p>
-                                        <p><strong>Role:</strong> <span className={`badge ${u.role}`}>{u.role}</span></p>
+                                        <p><strong>Joined:</strong> {new Date(u.createdAt).toLocaleDateString()}</p>
                                     </div>
-                                ))
-                            )}
+                                </div>
+                            ))}
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
