@@ -48,9 +48,9 @@ const ComplaintList = ({ complaints }) => {
                                 </td>
                                 <td>
                                     {complaint.proofImage ? (
-                                        <a href={`http://localhost:5000/${complaint.proofImage}`} target="_blank" rel="noopener noreferrer">
+                                        <a href={`https://village-grievance-system.onrender.com/${complaint.proofImage}`} target="_blank" rel="noopener noreferrer">
                                             <img
-                                                src={`http://localhost:5000/${complaint.proofImage}`}
+                                                src={`https://village-grievance-system.onrender.com/${complaint.proofImage}`}
                                                 alt="Proof"
                                                 style={{ width: '50px', height: '50px', objectFit: 'cover' }}
                                             />

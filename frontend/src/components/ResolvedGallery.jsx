@@ -34,7 +34,7 @@ const ResolvedGallery = () => {
             {complaints.map((complaint) => (
                 <div key={complaint._id} className="gallery-card" style={{ textAlign: 'left' }}>
                     <img
-                        src={`http://localhost:5000/${complaint.proofImage}`}
+                        src={`https://village-grievance-system.onrender.com/${complaint.proofImage}`}
                         alt="Proof"
                         style={{ width: '100%', height: '200px', objectFit: 'cover' }}
                     />
