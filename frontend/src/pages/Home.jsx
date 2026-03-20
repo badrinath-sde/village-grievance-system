@@ -73,9 +73,6 @@ const Home = () => {
                 <div className="hp-hero-orb hp-hero-orb--1" />
                 <div className="hp-hero-orb hp-hero-orb--2" />
                 <div className="hp-hero-content">
-                    <span className="hp-badge-pill">
-                        <span className="hp-badge-dot" /> Now Live — V2.0 Release
-                    </span>
                     <h1>
                         Empowering Villages,<br />
                         <span className="hp-gradient-text">One Complaint at a Time.</span>
