@@ -12,6 +12,7 @@ const Register = () => {
     const { register } = useAuth();
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,11 +20,14 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+        setError('');
         try {
             await register(formData);
             navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed');
+            setLoading(false);
         }
     };
 
@@ -31,7 +35,7 @@ const Register = () => {
         <div className="auth-page-wrapper">
             <div className="register-container">
                 <h2>Register</h2>
-                {error && <p className="error">{error}</p>}
+                {error && <p className="error" style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
                 <form onSubmit={handleSubmit} className="auth-form">
                     <input
                         type="text"
@@ -61,7 +65,9 @@ const Register = () => {
                         onChange={handleChange}
                         required
                     />
-                    <button type="submit" className="auth-btn">Register</button>
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? 'Registering...' : 'Register'}
+                    </button>
                 </form>
                 <p className="auth-footer">
                     Already have an account? <Link to="/login">Login</Link>
