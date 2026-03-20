@@ -23,7 +23,7 @@ const ResolvedGallery = () => {
                     <span className="premium-icon">🏆</span>
                     <h3>A Perfect Start</h3>
                     <p>No community issues have been reported or resolved yet! Our village is currently running smoothly.</p>
-                    <button onClick={() => window.location.href='/login'} className="btn-modern btn-glow" style={{ marginTop: '25px', display: 'inline-block' }}>Report an Issue</button>
+                    <button onClick={() => window.location.href='/login'} className="hp-btn hp-btn--primary" style={{ marginTop: '25px', display: 'inline-block' }}>Report an Issue</button>
                 </div>
             </div>
         );

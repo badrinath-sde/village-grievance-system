@@ -1,64 +1,193 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 import ResolvedGallery from '../components/ResolvedGallery';
 import heroImg from '../assets/hero_corporate.png';
-import featuresImg from '../assets/features_minimal.png';
 import impactImg from '../assets/impact_real.png';
 
+/* Animated counter hook */
+const useCounter = (target, duration = 2000) => {
+    const [count, setCount] = useState(0);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    let start = 0;
+                    const step = target / (duration / 16);
+                    const timer = setInterval(() => {
+                        start += step;
+                        if (start >= target) {
+                            setCount(target);
+                            clearInterval(timer);
+                        } else {
+                            setCount(Math.floor(start));
+                        }
+                    }, 16);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.5 }
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [target, duration]);
+
+    return [count, ref];
+};
+
+/* Scroll reveal hook */
+const useReveal = () => {
+    const ref = useRef(null);
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            },
+            { threshold: 0.15 }
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, []);
+    return ref;
+};
+
 const Home = () => {
+    const featuresRef = useReveal();
+    const stepsRef = useReveal();
+    const statsRef = useReveal();
+
+    const [complaints, complaintsCounterRef] = useCounter(500);
+    const [resolved, resolvedCounterRef] = useCounter(420);
+    const [officers, officersCounterRef] = useCounter(35);
+    const [villages, villagesCounterRef] = useCounter(12);
+
     return (
-        <div className="home-page-modern">
-            {/* Hero Section */}
-            <section className="hero-modern" style={{ backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.8)), url(${heroImg})` }}>
-                <div className="hero-content-modern">
-                    <h1 className="hero-title">Welcome to the Future of <br /><span>Village Development</span></h1>
-                    <p className="hero-subtitle">A transparent, digital ecosystem empowering citizens to shape their community. Report, track, and witness change in real-time.</p>
-                    <div className="hero-actions">
-                        <Link to="/register" className="btn-modern btn-glow">Get Started</Link>
-                        <Link to="/login" className="btn-modern btn-outline">Login</Link>
+        <div className="hp">
+            {/* ===== HERO ===== */}
+            <section className="hp-hero" style={{ backgroundImage: `url(${heroImg})` }}>
+                <div className="hp-hero-overlay" />
+                <div className="hp-hero-orb hp-hero-orb--1" />
+                <div className="hp-hero-orb hp-hero-orb--2" />
+                <div className="hp-hero-content">
+                    <span className="hp-badge-pill">
+                        <span className="hp-badge-dot" /> Now Live — V2.0 Release
+                    </span>
+                    <h1>
+                        Empowering Villages,<br />
+                        <span className="hp-gradient-text">One Complaint at a Time.</span>
+                    </h1>
+                    <p>
+                        A transparent, AI-ready civic platform where citizens report, officers resolve, and communities grow — all in real-time.
+                    </p>
+                    <div className="hp-hero-btns">
+                        <Link to="/register" className="hp-btn hp-btn--primary">
+                            Get Started Free →
+                        </Link>
+                        <Link to="/login" className="hp-btn hp-btn--ghost">
+                            Login to Dashboard
+                        </Link>
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section className="features-modern" id="features">
-                <div className="features-header" style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h2 className="section-title">Smart Infrastructure, <br/><span>Smarter Governance</span></h2>
-                    <p className="hero-subtitle" style={{ color: '#64748B', maxWidth: '600px', margin: '0 auto' }}>A completely integrated digital toolkit bringing the village community together.</p>
-                </div>
-                <div className="features-symmetrical-grid">
-                    <div className="feature-symm-card">
-                        <div className="icon-ring">📍</div>
-                        <h3>Precision Mapping</h3>
-                        <p>Pinpoint issues precisely on our interactive map for lightning-fast response times.</p>
+            {/* ===== STATS BAR ===== */}
+            <section className="hp-stats" ref={statsRef}>
+                <div className="hp-stats-inner reveal-item">
+                    <div className="hp-stat" ref={complaintsCounterRef}>
+                        <span className="hp-stat-num">{complaints}+</span>
+                        <span className="hp-stat-label">Complaints Filed</span>
                     </div>
-                    <div className="feature-symm-card">
-                        <div className="icon-ring">📸</div>
-                        <h3>Verified Proof</h3>
-                        <p>Officers are required to upload photo evidence ensuring 100% transparency.</p>
+                    <div className="hp-stat" ref={resolvedCounterRef}>
+                        <span className="hp-stat-num">{resolved}+</span>
+                        <span className="hp-stat-label">Issues Resolved</span>
                     </div>
-                    <div className="feature-symm-card">
-                        <div className="icon-ring">📈</div>
-                        <h3>Live Tracking</h3>
-                        <p>Monitor your grievance status step-by-step from submission to resolution in real-time.</p>
+                    <div className="hp-stat" ref={officersCounterRef}>
+                        <span className="hp-stat-num">{officers}+</span>
+                        <span className="hp-stat-label">Active Officers</span>
                     </div>
-                    <div className="feature-symm-card">
-                        <div className="icon-ring">💬</div>
-                        <h3>Direct Feedback</h3>
-                        <p>Hold the administration accountable by rating the quality of resolutions directly.</p>
+                    <div className="hp-stat" ref={villagesCounterRef}>
+                        <span className="hp-stat-num">{villages}+</span>
+                        <span className="hp-stat-label">Villages Covered</span>
                     </div>
                 </div>
             </section>
 
-            {/* Impact Section */}
-            <section className="impact-modern" id="impact">
-                <div className="impact-header" style={{ backgroundImage: `url(${impactImg})` }}>
-                    <div className="impact-header-content">
-                        <h2 className="section-title">Community <br/><span>Impact</span></h2>
-                        <p>Real change begins with visibility. Explore the issues our administration has successfully resolved below.</p>
+            {/* ===== FEATURES ===== */}
+            <section className="hp-features" ref={featuresRef}>
+                <div className="hp-section-header reveal-item">
+                    <span className="hp-overline">WHY CHOOSE US</span>
+                    <h2>Built for <span className="hp-gradient-text">Real Impact</span></h2>
+                    <p>Everything a modern civic system needs — designed to make governance transparent and citizens powerful.</p>
+                </div>
+                <div className="hp-features-grid reveal-item">
+                    {[
+                        { icon: '📍', title: 'GPS Mapping', desc: 'Auto-detect locations to pinpoint issues with precision.' },
+                        { icon: '📸', title: 'Photo Evidence', desc: 'Officers upload proof — full accountability guaranteed.' },
+                        { icon: '📈', title: 'Live Tracking', desc: 'Watch your complaint move from filed → in-progress → resolved.' },
+                        { icon: '💬', title: 'Citizen Feedback', desc: 'Rate & review every resolution. Your voice matters.' },
+                        { icon: '🛡️', title: 'Role-Based Access', desc: 'Separate dashboards for citizens, officers & admins.' },
+                        { icon: '⚡', title: 'Instant Alerts', desc: 'Real-time toast notifications for every action taken.' },
+                    ].map((f, i) => (
+                        <div className="hp-feature-card" key={i} style={{ animationDelay: `${i * 0.08}s` }}>
+                            <div className="hp-feature-icon">{f.icon}</div>
+                            <h3>{f.title}</h3>
+                            <p>{f.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ===== HOW IT WORKS ===== */}
+            <section className="hp-steps" ref={stepsRef}>
+                <div className="hp-section-header reveal-item">
+                    <span className="hp-overline">HOW IT WORKS</span>
+                    <h2>3 Simple Steps to <span className="hp-gradient-text">Better Governance</span></h2>
+                </div>
+                <div className="hp-steps-grid reveal-item">
+                    {[
+                        { num: '01', title: 'Report', desc: 'Citizens submit grievances with GPS location and category.', color: '#3b82f6' },
+                        { num: '02', title: 'Assign & Resolve', desc: 'Admins assign officers who update status with photo proof.', color: '#8b5cf6' },
+                        { num: '03', title: 'Rate & Track', desc: 'Citizens track progress in real-time and rate the resolution.', color: '#06b6d4' },
+                    ].map((s, i) => (
+                        <div className="hp-step" key={i} style={{ animationDelay: `${i * 0.15}s` }}>
+                            <div className="hp-step-num" style={{ background: `linear-gradient(135deg, ${s.color}, ${s.color}88)` }}>
+                                {s.num}
+                            </div>
+                            <h3>{s.title}</h3>
+                            <p>{s.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ===== IMPACT / GALLERY ===== */}
+            <section className="hp-impact">
+                <div className="hp-impact-banner" style={{ backgroundImage: `url(${impactImg})` }}>
+                    <div className="hp-impact-banner-overlay" />
+                    <div className="hp-impact-banner-content">
+                        <span className="hp-overline" style={{ color: 'rgba(255,255,255,0.7)' }}>COMMUNITY IMPACT</span>
+                        <h2>See the <span style={{ color: '#60a5fa' }}>Change</span> We've Made</h2>
+                        <p>Browse through resolved grievances — real problems, real solutions.</p>
                     </div>
                 </div>
-                <div className="impact-gallery-wrapper">
+                <div className="hp-impact-gallery">
                     <ResolvedGallery />
+                </div>
+            </section>
+
+            {/* ===== CTA ===== */}
+            <section className="hp-cta">
+                <div className="hp-cta-inner">
+                    <h2>Ready to Transform <span className="hp-gradient-text">Your Village?</span></h2>
+                    <p>Join hundreds of citizens already making a difference. It takes less than 30 seconds to get started.</p>
+                    <div className="hp-hero-btns" style={{ justifyContent: 'center' }}>
+                        <Link to="/register" className="hp-btn hp-btn--primary">Create Free Account</Link>
+                        <Link to="/login" className="hp-btn hp-btn--ghost">Login →</Link>
+                    </div>
                 </div>
             </section>
         </div>
