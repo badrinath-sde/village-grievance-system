@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import OfficerDashboard from './pages/OfficerDashboard';
 import AdminEmployees from './pages/AdminEmployees';
 import AdminCitizens from './pages/AdminCitizens';
+import { Toaster } from 'react-hot-toast';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
@@ -29,6 +30,7 @@ const Layout = () => {
 
   return (
     <div className="App">
+      <Toaster position="top-right" reverseOrder={false} />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

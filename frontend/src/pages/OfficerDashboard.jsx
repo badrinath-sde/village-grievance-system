@@ -32,14 +32,38 @@ const OfficerDashboard = () => {
         return [];
     };
 
+    const counts = {
+        total: complaints.length,
+        assigned: complaints.filter(c => c.status !== 'Resolved').length,
+        completed: complaints.filter(c => c.status === 'Resolved').length,
+    };
+
     return (
         <div className="dashboard-layout">
             <Sidebar role="officer" activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="dashboard-main">
                 <header className="dashboard-header">
-                    <h2>Officer Dashboard</h2>
+                    <h1>Officer Dashboard</h1>
                 </header>
+                
                 <div className="dashboard-content">
+                    {activeTab === 'assigned' && (
+                        <div className="grid grid-cols-3" style={{ marginBottom: '2rem' }}>
+                            <div className="card">
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Total Tasks</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700' }}>{counts.total}</p>
+                            </div>
+                            <div className="card" style={{ borderLeft: '4px solid hsl(var(--primary))' }}>
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Active</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700', color: 'hsl(var(--primary))' }}>{counts.assigned}</p>
+                            </div>
+                            <div className="card" style={{ borderLeft: '4px solid #166534' }}>
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Completed</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700', color: '#166534' }}>{counts.completed}</p>
+                            </div>
+                        </div>
+                    )}
+
                     {(activeTab === 'assigned' || activeTab === 'completed') && (
                         <OfficerComplaintList complaints={getFilteredComplaints()} onUpdate={fetchComplaints} />
                     )}

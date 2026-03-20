@@ -38,14 +38,38 @@ const UserDashboard = () => {
         setActiveTab('active'); // Switch to active list view after submission
     };
 
+    const counts = {
+        total: complaints.length,
+        pending: complaints.filter(c => c.status === 'Pending').length,
+        resolved: complaints.filter(c => c.status === 'Resolved').length,
+    };
+
     return (
         <div className="dashboard-layout">
             <Sidebar role="user" activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className="dashboard-main">
                 <header className="dashboard-header">
-                    <h2>Welcome, {user.name}</h2>
+                    <h1>Welcome, {user.name}</h1>
                 </header>
+                
                 <div className="dashboard-content">
+                    {activeTab === 'active' && (
+                        <div className="grid grid-cols-3" style={{ marginBottom: '2rem' }}>
+                            <div className="card">
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Total Complaints</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700' }}>{counts.total}</p>
+                            </div>
+                            <div className="card">
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Pending</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700', color: '#92400e' }}>{counts.pending}</p>
+                            </div>
+                            <div className="card">
+                                <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Resolved</p>
+                                <p style={{ fontSize: '1.5rem', fontWeight: '700', color: '#166534' }}>{counts.resolved}</p>
+                            </div>
+                        </div>
+                    )}
+
                     {activeTab === 'create' && <ComplaintForm onComplaintAdded={handleComplaintAdded} />}
                     {(activeTab === 'active' || activeTab === 'history') && (
                         <ComplaintList complaints={getFilteredComplaints()} />

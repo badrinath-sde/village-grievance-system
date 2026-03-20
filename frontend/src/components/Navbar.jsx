@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -13,35 +13,47 @@ const Navbar = () => {
         navigate('/login');
     };
 
+    const closeMenu = () => setIsMenuOpen(false);
+
     return (
         <nav className="navbar">
             <div className="logo">
-                <Link to="/">Village GMS</Link>
+                <Link to="/" onClick={closeMenu}>Village GMS</Link>
             </div>
-            <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                <span className={isMenuOpen ? 'bar active' : 'bar'}></span>
-                <span className={isMenuOpen ? 'bar active' : 'bar'}></span>
-                <span className={isMenuOpen ? 'bar active' : 'bar'}></span>
-            </div>
+            
+            <button 
+                className={`hamburger ${isMenuOpen ? 'active' : ''}`} 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+            >
+                <span className="bar"></span>
+                <span className="bar"></span>
+                <span className="bar"></span>
+            </button>
+
             <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
-                <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
+                <li>
+                    <NavLink to="/" end onClick={closeMenu}>Home</NavLink>
+                </li>
                 {user ? (
                     <>
                         <li>
-                            <Link to={
+                            <NavLink to={
                                 user.role === 'admin' ? '/admin' :
                                     user.role === 'officer' ? '/officer' :
                                         '/dashboard'
-                            } onClick={() => setIsMenuOpen(false)}>
+                            } onClick={closeMenu}>
                                 Dashboard
-                            </Link>
+                            </NavLink>
                         </li>
-                        <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
+                        <li>
+                            <button onClick={handleLogout} className="logout-btn">Logout</button>
+                        </li>
                     </>
                 ) : (
                     <>
-                        <li><Link to="/login" onClick={() => setIsMenuOpen(false)}>Login</Link></li>
-                        <li><Link to="/register" onClick={() => setIsMenuOpen(false)}>Register</Link></li>
+                        <li><NavLink to="/login" onClick={closeMenu}>Login</NavLink></li>
+                        <li><NavLink to="/register" onClick={closeMenu}>Register</NavLink></li>
                     </>
                 )}
             </ul>

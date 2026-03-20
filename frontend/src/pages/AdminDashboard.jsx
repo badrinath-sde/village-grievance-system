@@ -36,14 +36,36 @@ const AdminDashboard = () => {
         }
     };
 
+    const counts = {
+        total: complaints.length,
+        active: complaints.filter(c => c.status !== 'Resolved').length,
+        unassigned: complaints.filter(c => !c.officerId).length,
+    };
+
     return (
         <div className="dashboard-layout">
             <Sidebar role="admin" activeTab="complaints" />
             <div className="dashboard-main">
                 <header className="dashboard-header">
-                    <h2>Admin Control Panel</h2>
+                    <h1>Admin Control Panel</h1>
                 </header>
+                
                 <div className="dashboard-content">
+                    <div className="grid grid-cols-3" style={{ marginBottom: '2rem' }}>
+                        <div className="card">
+                            <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Total Complaints</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '700' }}>{counts.total}</p>
+                        </div>
+                        <div className="card">
+                            <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Active</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '700', color: 'hsl(var(--primary))' }}>{counts.active}</p>
+                        </div>
+                        <div className="card">
+                            <p style={{ fontSize: '0.875rem', color: 'hsl(var(--foreground) / 0.6)' }}>Unassigned</p>
+                            <p style={{ fontSize: '1.5rem', fontWeight: '700', color: '#92400e' }}>{counts.unassigned}</p>
+                        </div>
+                    </div>
+
                     <AdminComplaintList
                         complaints={complaints}
                         officers={officers}
