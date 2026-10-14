@@ -8,6 +8,9 @@ A full-stack MERN application that allows users to submit, track, and manage gri
 
 * Frontend: https://village-grievance-system.netlify.app/
 * Backend API: https://village-grievance-system.onrender.com
+* <a href="https://your-project.vercel.app" target="_blank" rel="noopener noreferrer">
+  🚀 Live Demo ↗
+</a>
 
 ---
 
